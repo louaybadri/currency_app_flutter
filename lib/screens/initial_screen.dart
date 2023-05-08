@@ -1,71 +1,71 @@
 import 'package:currency_conversion/config/size_config.dart';
 import 'package:currency_conversion/providers/currencies.dart';
-import 'package:currency_conversion/utils/get_all_currencies.dart';
+import 'package:currency_conversion/providers/user_data_provider.dart';
+import 'package:currency_conversion/screens/main_screen.dart';
+import 'package:currency_conversion/screens/template/screen_template.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'dart:convert';
 
-import '../utils/convert_from_to.dart';
 import '../widgets/dropdown_list.dart';
 
 class InitialScreen extends StatelessWidget {
-  const InitialScreen({Key? key}) : super(key: key);
+  InitialScreen({Key? key}) : super(key: key);
 
+  final TextEditingController textEditingController =
+  TextEditingController();
   @override
   Widget build(BuildContext context) {
     SizeConfig s = SizeConfig();
     s.init(context);
-    return Scaffold(
-      body: Center(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(0, SizeConfig.topPadding, 0, 0),
-          width: SizeConfig.screenWidth * 0.8,
-          child: Column(
+    return ScreenTemplate(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Image.asset("lib/assets/currency.jpg",
+              width: SizeConfig.screenWidth * 0.4),
+          TextField(
+            controller: textEditingController,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Enter the Username here please',
+            ),
+          ),
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Image.asset("lib/assets/currency.jpg",
-                  width: SizeConfig.screenWidth * 0.4),
-              const TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter the Username here please',
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  DropDownList( currencies: context.watch<Currencies>().currencies),
-                  // FutureBuilder<List<String>>(
-                  //   future: getAllCurrencies(),
-                  //   builder: (context,snapshot){
-                  //     if(snapshot.hasData){
-                  //       List<String> currencies =  snapshot.data as List<String>;
-                  //       return(
-                  //           DropDownList( currencies: currencies)
-                  //       );
-                  //     }
-                  //     return const Text("Loading");
-                  //   },
-                  // ),
-                  InkWell(
-                      // onTap: getAllCurrencies,
-                      onTap: () async {
-                        await convertFromTo("USD", 'EUR');
-                      },
-                      child: Image.asset(
-                        "lib/assets/convert.png",
-                        width: SizeConfig.screenWidth * 0.12,
-                      )),
-                  DropDownList( currencies: context.watch<Currencies>().currencies),
-
-                ],
-              ),
+              DropDownList(
+                  currencies: context.watch<Currencies>().currencies,
+                  from: true),
+              InkWell(
+                  // onTap: getAllCurrencies,
+                  onTap: () {
+                    print(Provider.of<UserData>(context, listen: false).from);
+                    print(Provider.of<UserData>(context, listen: false).to);
+                    print(
+                        Provider.of<UserData>(context, listen: false).username);
+                  },
+                  child: Image.asset(
+                    "lib/assets/convert.png",
+                    width: SizeConfig.screenWidth * 0.12,
+                  )),
+              DropDownList(
+                  currencies: context.watch<Currencies>().currencies,
+                  from: false),
             ],
           ),
-        ),
+          TextButton(
+            child: const Text("Submit"),
+            onPressed: () {
+              String from = Provider.of<UserData>(context,listen: false).from;
+              String to = Provider.of<UserData>(context,listen: false).to;
+              context.read<UserData>().setName(textEditingController.text);
+              context.read<Currencies>().updateRatio(from, to);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MainScreen()));
+            },
+          ),
+        ],
       ),
     );
   }
-
 }
