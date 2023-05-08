@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../config/size_config.dart';
+import '../widgets/rounded_border_container.dart';
+import '../widgets/styled_text.dart';
 
 class MainScreen extends StatefulWidget {
   MainScreen({Key? key}) : super(key: key);
@@ -16,7 +18,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final TextEditingController  textEditingController = TextEditingController();
+  final TextEditingController textEditingController = TextEditingController();
 
   double value = 0;
 
@@ -54,13 +56,16 @@ class _MainScreenState extends State<MainScreen> {
               children: [
                 RoundedBorderContainer(
                   widthRatio: 0.3,
-                  textValue: context.watch<UserData>().from,
+                  backgroundColor: const Color.fromARGB(255, 70, 106, 148),
+                  child: StyledText(text: context.watch<UserData>().from),
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     context.read<UserData>().switchCurrencies();
-                    String from = Provider.of<UserData>(context,listen: false).from;
-                    String to = Provider.of<UserData>(context,listen: false).to;
+                    String from =
+                        Provider.of<UserData>(context, listen: false).from;
+                    String to =
+                        Provider.of<UserData>(context, listen: false).to;
                     context.read<Currencies>().updateRatio(from, to);
                   },
                   child: Image.asset(
@@ -70,7 +75,8 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 RoundedBorderContainer(
                   widthRatio: 0.3,
-                  textValue: context.watch<UserData>().to,
+                  backgroundColor: const Color.fromARGB(255, 70, 106, 148),
+                  child: StyledText(text: context.watch<UserData>().to),
                 ),
               ],
             ),
@@ -79,30 +85,35 @@ class _MainScreenState extends State<MainScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                TextField(
-                  onChanged: (str){
-                    if(str.isEmpty){
-                      setState(() {
-                        value = 0;
-                      });
-                    }else {
-                      setState(() {
-                      value = double.parse(str);
-                    });
-                    }
-
-                  },
-                  controller: textEditingController,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Currency to convert',
-
-                  ),),
-                  RoundedBorderContainer(widthRatio: 0.8,textValue: (value*context.watch<Currencies>().ratio).toStringAsFixed(3)),
+                  TextField(
+                    onChanged: (str) {
+                      if (str.isEmpty) {
+                        setState(() {
+                          value = 0;
+                        });
+                      } else {
+                        setState(() {
+                          value = double.parse(str);
+                        });
+                      }
+                    },
+                    controller: textEditingController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Currency to convert',
+                    ),
+                  ),
+                  RoundedBorderContainer(
+                    widthRatio: 0.8,
+                    backgroundColor: const Color.fromARGB(255, 70, 106, 148),
+                    child: StyledText(
+                        text: (value * context.watch<Currencies>().ratio)
+                            .toStringAsFixed(3)),
+                  ),
                 ],
               ),
             ),
@@ -110,9 +121,38 @@ class _MainScreenState extends State<MainScreen> {
               height: SizeConfig.screenHeight * .25,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: const [
-                  RoundedBorderContainer(widthRatio: 0.8,textValue: "hi5"),
-                  RoundedBorderContainer(widthRatio: 0.8,textValue: "hi6")
+                children: [
+                  InkWell(
+                    onTap: () {
+                      String date = DateTime.now().toString();
+                      String fromCurrency = Provider.of<UserData>(context,listen: false).from;
+                      String toCurrency = Provider.of<UserData>(context,listen: false).to;
+                      String fromValue = textEditingController.text;
+                      String toValue = (value*Provider.of<Currencies>(context,listen: false).ratio)
+                          .toStringAsFixed(3);
+                      String allData ="$date $fromCurrency $toCurrency $fromValue $toValue";
+
+                      print(allData.split(" "));
+                      },
+                    child: RoundedBorderContainer(
+                      widthRatio: 0.8,
+                      backgroundColor: const Color.fromARGB(255, 55, 126, 63),
+                      child: Image.asset(
+                        "lib/assets/save.png",
+                        width: SizeConfig.screenWidth * 0.10,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  RoundedBorderContainer(
+                    widthRatio: 0.8,
+                    backgroundColor: const Color.fromARGB(255, 235, 57, 44),
+                    child: Image.asset(
+                      "lib/assets/delete.png",
+                      width: SizeConfig.screenWidth * 0.10,
+                      color: Colors.white,
+                    ),
+                  )
                 ],
               ),
             )
@@ -120,23 +160,5 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
     );
-  }
-}
-
-class RoundedBorderContainer extends StatelessWidget {
-  const RoundedBorderContainer({
-    super.key, required this.widthRatio, required this.textValue,
-  });
-  final double widthRatio;
-  final String textValue;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.all(22),
-        width: SizeConfig.screenWidth * widthRatio,
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-            borderRadius: BorderRadius.circular(15)),
-        child: Center(child: Text(textValue)));
   }
 }

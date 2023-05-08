@@ -9,10 +9,13 @@ Future<double> convertFromTo(String from, String to) async {
 
     // print(url);
     http.Response res = await http.get(Uri.parse(url));
-    double data = jsonDecode(res.body)["result"][to];
-    if (data.isNaN) {
-      throw Exception("Null value");
-    }
+    final double data = jsonDecode(res.body)["result"][to];
+    // if (jsonDecode(res.body)["result"][to] is double ) {
+    //   print("it is ////////////////////");
+    // } else  {
+    //   print("it is //////////////////// NOT");
+    //
+    // }
     // print(data);
     return data;
   } catch (e) {
