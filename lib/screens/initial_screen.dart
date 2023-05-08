@@ -21,50 +21,47 @@ class InitialScreen extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.fromLTRB(0, SizeConfig.topPadding, 0, 0),
           width: SizeConfig.screenWidth * 0.8,
-          // height: SizeConfig.screenHeight,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Image.asset("lib/assets/currency.jpg",
-                    width: SizeConfig.screenWidth * 0.4),
-                const TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter the Username here please',
-                  ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Image.asset("lib/assets/currency.jpg",
+                  width: SizeConfig.screenWidth * 0.4),
+              const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter the Username here please',
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(child: DropDownList( currencies: context.watch<Currencies>().currencies)),
-                    // FutureBuilder<List<String>>(
-                    //   future: getAllCurrencies(),
-                    //   builder: (context,snapshot){
-                    //     if(snapshot.hasData){
-                    //       List<String> currencies =  snapshot.data as List<String>;
-                    //       return(
-                    //           DropDownList( currencies: currencies)
-                    //       );
-                    //     }
-                    //     return const Text("Loading");
-                    //   },
-                    // ),
-                    InkWell(
-                        // onTap: getAllCurrencies,
-                        onTap: () async {
-                          await convertFromTo("USD", 'EUR');
-                        },
-                        child: Image.asset(
-                          "lib/assets/convert.png",
-                          width: SizeConfig.screenWidth * 0.12,
-                        )),
-                    Expanded(child: DropDownList( currencies: context.watch<Currencies>().currencies)),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  DropDownList( currencies: context.watch<Currencies>().currencies),
+                  // FutureBuilder<List<String>>(
+                  //   future: getAllCurrencies(),
+                  //   builder: (context,snapshot){
+                  //     if(snapshot.hasData){
+                  //       List<String> currencies =  snapshot.data as List<String>;
+                  //       return(
+                  //           DropDownList( currencies: currencies)
+                  //       );
+                  //     }
+                  //     return const Text("Loading");
+                  //   },
+                  // ),
+                  InkWell(
+                      // onTap: getAllCurrencies,
+                      onTap: () async {
+                        await convertFromTo("USD", 'EUR');
+                      },
+                      child: Image.asset(
+                        "lib/assets/convert.png",
+                        width: SizeConfig.screenWidth * 0.12,
+                      )),
+                  DropDownList( currencies: context.watch<Currencies>().currencies),
 
-                  ],
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
