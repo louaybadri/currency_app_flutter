@@ -21,7 +21,6 @@ class RoundedBorderContainer extends StatelessWidget {
         padding: const EdgeInsets.all(22),
         width: SizeConfig.screenWidth * widthRatio,
         decoration: BoxDecoration(
-          // border: Border.all(color:Colors.black),
             borderRadius: BorderRadius.circular(15),
             color: backgroundColor),
         child: Center(child: child));

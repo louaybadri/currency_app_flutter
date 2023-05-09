@@ -22,6 +22,7 @@ class _MainScreenState extends State<MainScreen> {
   final TextEditingController textEditingController = TextEditingController();
 
   double value = 0;
+  bool invalidAmount = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +44,7 @@ class _MainScreenState extends State<MainScreen> {
                   context.read<UserData>().switchCurrencies();
                   String from =
                       Provider.of<UserData>(context, listen: false).from;
-                  String to =
-                      Provider.of<UserData>(context, listen: false).to;
+                  String to = Provider.of<UserData>(context, listen: false).to;
                   context.read<Currencies>().updateRatio(from, to);
                 },
                 child: Image.asset(
@@ -72,15 +72,17 @@ class _MainScreenState extends State<MainScreen> {
                       });
                     } else {
                       setState(() {
-                        value = double.parse(str);
+                        try {
+                          value = double.parse(str);
+                          invalidAmount = false;
+                        } catch (e) {
+                          invalidAmount = true;
+                        }
                       });
                     }
                   },
                   controller: textEditingController,
                   keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Currency to convert',
@@ -90,8 +92,10 @@ class _MainScreenState extends State<MainScreen> {
                   widthRatio: 0.8,
                   backgroundColor: const Color.fromARGB(255, 70, 106, 148),
                   child: StyledText(
-                      text: (value * context.watch<Currencies>().ratio)
-                          .toStringAsFixed(3)),
+                      text: invalidAmount
+                          ? "Invalid Amount"
+                          : (value * context.watch<Currencies>().ratio)
+                              .toStringAsFixed(3)),
                 ),
               ],
             ),
@@ -102,34 +106,65 @@ class _MainScreenState extends State<MainScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 InkWell(
-                  onTap: () async{
-                    String date = DateTime.now().toString();
-                    String fromCurrency = Provider.of<UserData>(context,listen: false).from;
-                    String toCurrency = Provider.of<UserData>(context,listen: false).to;
-                    String fromValue = textEditingController.text;
-                    String toValue = (value*Provider.of<Currencies>(context,listen: false).ratio)
-                        .toStringAsFixed(3);
-                    String allData ="$date $fromCurrency $toCurrency $fromValue $toValue";
-                    context.read<SavedData>().addToSavedData(allData);
-                    showDialog(context: context, builder: (_){
-                    return AlertDialog(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: const [
-                          Icon(Icons.done),
-                          Text("Data Saved"),
-                        ],
-                      ),
-                      actions: [TextButton(
-                        child: const Text('Back to Page'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),],
-                    );
-                    });
-
-                    },
+                  onTap: () async {
+                    if(textEditingController.text==''){
+                      showDialog(context: context, builder: (_){
+                        return AlertDialog(
+                          title: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: const [
+                              Icon(Icons.warning),
+                              Text("You didn't enter any amount, try again"),
+                            ],
+                          ),
+                          actions: [
+                            TextButton(
+                              child: const Text('Back to Page'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      });
+                    }else {
+                      String date = DateTime.now().toString();
+                      String fromCurrency =
+                          Provider.of<UserData>(context, listen: false).from;
+                      String toCurrency =
+                          Provider.of<UserData>(context, listen: false).to;
+                      String fromValue = value.toString();
+                      String toValue = (value *
+                              Provider.of<Currencies>(context, listen: false)
+                                  .ratio)
+                          .toStringAsFixed(3);
+                      String allData =
+                          "$date $fromCurrency $toCurrency $fromValue $toValue";
+                      context.read<SavedData>().addToSavedData(allData);
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              title: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: const [
+                                  Icon(Icons.done),
+                                  Text("Data Saved"),
+                                ],
+                              ),
+                              actions: [
+                                TextButton(
+                                  child: const Text('Back to Page'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          });
+                    }
+                  },
                   child: RoundedBorderContainer(
                     widthRatio: 0.8,
                     backgroundColor: const Color.fromARGB(255, 55, 126, 63),
@@ -141,7 +176,7 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                 ),
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     Navigator.pop(context);
                   },
                   child: RoundedBorderContainer(
@@ -162,4 +197,3 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
-

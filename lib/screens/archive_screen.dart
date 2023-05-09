@@ -1,3 +1,5 @@
+import 'package:currency_conversion/widgets/conversion_details.dart';
+
 import '../config/size_config.dart';
 import '../providers/saved_data_provider.dart';
 import '../screens/template/screen_template.dart';
@@ -21,7 +23,7 @@ class ArchiveScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ...context.watch<SavedData>().savedData
-                  .map((e) => ArchiveUnit(
+                  .map((e) => ConversionOperation(
                         archiveUnit: e,
                       ))
                   .toList(),
@@ -33,8 +35,8 @@ class ArchiveScreen extends StatelessWidget {
   }
 }
 
-class ArchiveUnit extends StatelessWidget {
-  const ArchiveUnit({
+class ConversionOperation extends StatelessWidget {
+  const ConversionOperation({
     super.key,
     required this.archiveUnit,
   });
@@ -45,48 +47,61 @@ class ArchiveUnit extends StatelessWidget {
   Widget build(BuildContext context) {
     List<String> allData = archiveUnit.split(" ");
     return Container(
+      margin: const EdgeInsets.all(4),
       decoration: BoxDecoration(border: Border.all(color: Colors.black,width: 1),borderRadius: BorderRadius.circular(15)),
-      padding: const EdgeInsets.fromLTRB(0,8.0,0,8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Column(
-              crossAxisAlignment:CrossAxisAlignment.start,
-              children: [
-            const Text("Date"),
-            Text(allData[0]),
-          ]),
-          Column(children: [
-            const Text("Time"),
-            Text(allData[1].substring(0,8)),
-          ]),
-          Column(children: [
-            const Text("From"),
-            Row(
+      padding: const EdgeInsets.fromLTRB(0,8,0,8),
+      child: InkWell(
+        onTap: (){
+          showDialog(context: context, builder: (_){
+            return Dialog(
+              elevation: 0,
+              child: ConversionDetails(archiveUnit:archiveUnit )
+              ,
+            );
+          });
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
 
-              children: [
-                Text(allData[4]),
-                Text(allData[2]),
-              ],
-            ),
-          ]),Column(children: [
-            const Text("To"),
-            Row(
+            Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+              const Text("Conversion From"),
+              SizedBox(
+                width: SizeConfig.screenWidth*0.4,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      Text(allData[4]),
+                      Text(allData[2]),
+                    ],
+                  ),
+                ),
+              ),
+            ]),Column(
 
-              children: [
-                Text(allData[5]),
-                Text(allData[3]),
-              ],
-            ),
-          ]),
-          InkWell(
-              onTap: (){
-                context.read<SavedData>().deleteFromSavedData(archiveUnit);
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+              const Text("To"),
+              SizedBox(
+                width: SizeConfig.screenWidth*0.4,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      Text(allData[5]),
+                      Text(allData[3]),
+                    ],
+                  ),
+                ),
+              ),
+            ]),
 
-              },
-              child: const Icon(Icons.delete))
-        ],
+          ],
+        ),
       ),
     );
   }

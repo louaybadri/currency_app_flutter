@@ -11,8 +11,8 @@ import '../widgets/dropdown_list.dart';
 class InitialScreen extends StatelessWidget {
   InitialScreen({Key? key}) : super(key: key);
 
-  final TextEditingController textEditingController =
-  TextEditingController();
+  final TextEditingController textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     SizeConfig s = SizeConfig();
@@ -56,12 +56,36 @@ class InitialScreen extends StatelessWidget {
           TextButton(
             child: const Text("Submit"),
             onPressed: () {
-              String from = Provider.of<UserData>(context,listen: false).from;
-              String to = Provider.of<UserData>(context,listen: false).to;
-              context.read<UserData>().setName(textEditingController.text);
-              context.read<Currencies>().updateRatio(from, to);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const MainScreen()));
+              if (textEditingController.text == '') {
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        title: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: const [
+                            Icon(Icons.warning),
+                            Text("You didn't enter a Username, try again"),
+                          ],
+                        ),
+                        actions: [
+                          TextButton(
+                            child: const Text('Back to Page'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              }else{
+                String from = Provider.of<UserData>(context, listen: false).from;
+                String to = Provider.of<UserData>(context, listen: false).to;
+                context.read<UserData>().setName(textEditingController.text);
+                context.read<Currencies>().updateRatio(from, to);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const MainScreen()));
+              }
             },
           ),
         ],
