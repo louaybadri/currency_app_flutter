@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class Currencies with ChangeNotifier {
   List<String> _currencies = [];
-  double _ratio=1;
+  double _ratio=1.0;
   List<String> get currencies => _currencies;
   double get ratio => _ratio;
 

@@ -1,7 +1,8 @@
+import 'package:currency_conversion/screens/splash_screen.dart';
+
 import '../providers/currencies_provider.dart';
 import '../providers/saved_data_provider.dart';
 import '../providers/user_data_provider.dart';
-import '../screens/initial_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,11 +24,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Currency Convert',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: InitialScreen(),
+      home: const SplashScreen(),
     );
   }
 }

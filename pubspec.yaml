@@ -61,7 +61,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - lib/assets/currency.jpg
+    - lib/assets/currency.png
+    - lib/assets/exchange0.png
     - lib/assets/convert.png
     - lib/assets/save.png
     - lib/assets/delete.png

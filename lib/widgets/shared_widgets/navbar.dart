@@ -1,13 +1,11 @@
-import 'package:currency_conversion/config/size_config.dart';
-import 'package:currency_conversion/providers/currencies_provider.dart';
-import 'package:currency_conversion/providers/saved_data_provider.dart';
-import 'package:currency_conversion/providers/user_data_provider.dart';
-import 'package:currency_conversion/widgets/dropdown_list.dart';
-import 'package:currency_conversion/widgets/rounded_border_container.dart';
-import 'package:currency_conversion/widgets/styled_text.dart';
+import '../../config/size_config.dart';
+import '../../providers/currencies_provider.dart';
+import '../../providers/user_data_provider.dart';
+import 'dropdown_list.dart';
+import 'rounded_border_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../screens/archive_screen.dart';
+import '../../screens/archive_screen.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({
@@ -24,15 +22,7 @@ class NavBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          InkWell(
-            onTap: () {
-              context.read<SavedData>().deleteAllFromSavedData();
-            },
-            child: const Icon(
-              Icons.abc,
-              size: 50,
-            ),
-          ),
+          Image.asset("lib/assets/currency.png",width: 50),
           Row(
             children: [
               InkWell(

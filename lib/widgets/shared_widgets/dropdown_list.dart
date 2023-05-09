@@ -1,5 +1,5 @@
 import 'package:currency_conversion/providers/currencies_provider.dart';
-import '../providers/user_data_provider.dart';
+import '../../providers/user_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -50,9 +50,9 @@ Widget build(BuildContext context) {
                 from
                     ? context.read<UserData>().setFrom(value!)
                     : context.read<UserData>().setTo(value!);
-                String _from = context.read<UserData>().from;
-                String _to = context.read<UserData>().to;
-                context.read<Currencies>().updateRatio(_from, _to);
+                String fromCurrency = context.read<UserData>().from;
+                String toCurrency = context.read<UserData>().to;
+                context.read<Currencies>().updateRatio(fromCurrency, toCurrency);
               },
               items: currencies.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
