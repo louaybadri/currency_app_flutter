@@ -1,8 +1,6 @@
 
 
-import 'package:currency_conversion/providers/currencies.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class UserData with ChangeNotifier{
   String _username = "";

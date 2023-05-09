@@ -8,7 +8,6 @@ class ScreenTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig s = SizeConfig();
-    final TextEditingController textEditingController = TextEditingController();
     s.init(context);
     return Scaffold(resizeToAvoidBottomInset: false,
       body: Center(

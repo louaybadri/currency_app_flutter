@@ -1,5 +1,5 @@
 import 'package:currency_conversion/config/size_config.dart';
-import 'package:currency_conversion/providers/currencies.dart';
+import 'package:currency_conversion/providers/currencies_provider.dart';
 import 'package:currency_conversion/providers/user_data_provider.dart';
 import 'package:currency_conversion/screens/main_screen.dart';
 import 'package:currency_conversion/screens/template/screen_template.dart';
@@ -61,7 +61,7 @@ class InitialScreen extends StatelessWidget {
               context.read<UserData>().setName(textEditingController.text);
               context.read<Currencies>().updateRatio(from, to);
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MainScreen()));
+                  MaterialPageRoute(builder: (context) => const MainScreen()));
             },
           ),
         ],
