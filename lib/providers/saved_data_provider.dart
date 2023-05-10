@@ -1,8 +1,8 @@
 
 
-import '../utils/add_data.dart';
-import '../utils/clear_data.dart';
-import '../utils/get_data.dart';
+import '../utils/shared_preferences_utils/add_data.dart';
+import '../utils/shared_preferences_utils/clear_data.dart';
+import '../utils/shared_preferences_utils/get_data.dart';
 import 'package:flutter/material.dart';
 
 class SavedData with ChangeNotifier{

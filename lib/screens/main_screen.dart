@@ -9,6 +9,7 @@ import '../widgets/shared_widgets/navbar.dart';
 import '../widgets/shared_widgets/rounded_border_container.dart';
 import '../widgets/main_screen_widgets/save_data_button.dart';
 import '../widgets/shared_widgets/styled_text.dart';
+import '../consts/constants.dart' as CONSTS;
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -71,7 +72,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 RoundedBorderContainer(
                   widthRatio: 0.8,
-                  backgroundColor: const Color.fromARGB(255, 70, 106, 148),
+                  backgroundColor: CONSTS.blue,
 
                   child: StyledText(
                       text: invalidAmount

@@ -1,4 +1,4 @@
-import 'package:currency_conversion/providers/currencies_provider.dart';
+
 import '../../providers/user_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,12 +29,8 @@ Widget build(BuildContext context) {
           child: Center(
             child: DropdownButton<String>(
               value: from
-                  ? context.watch<UserData>().from == ""
-                      ? currencies.first
-                      : context.watch<UserData>().from
-                  : context.watch<UserData>().to == ""
-                      ? currencies.first
-                      : context.watch<UserData>().to,
+                  ?context.watch<UserData>().tempFrom
+                  : context.watch<UserData>().tempTo,
               icon: const Icon(Icons.arrow_downward),
               // elevation: 16,
               style: const TextStyle(
@@ -48,11 +44,8 @@ Widget build(BuildContext context) {
               ),
               onChanged: (String? value) {
                 from
-                    ? context.read<UserData>().setFrom(value!)
-                    : context.read<UserData>().setTo(value!);
-                String fromCurrency = context.read<UserData>().from;
-                String toCurrency = context.read<UserData>().to;
-                context.read<Currencies>().updateRatio(fromCurrency, toCurrency);
+                    ? context.read<UserData>().setTempFrom(value!)
+                    : context.read<UserData>().setTempTo(value!);
               },
               items: currencies.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(

@@ -1,11 +1,10 @@
-import 'package:currency_conversion/widgets/initial_screen_widgets/invalid_username_alert.dart';
+import 'package:currency_conversion/widgets/shared_widgets/styled_text.dart';
 
 import '../../config/size_config.dart';
 import '../../providers/currencies_provider.dart';
 import '../../providers/user_data_provider.dart';
 import 'change_currency.dart';
 import 'change_username.dart';
-import 'dropdown_list.dart';
 import 'rounded_border_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +17,6 @@ class NavBar extends StatelessWidget {
   });
 
   final bool isArchiveScreenActive;
-
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +44,8 @@ class NavBar extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
+
+                  Provider.of<UserData>(context,listen: false).resetTemp();
                   showDialog(
                       context: context,
                       builder: (_) {
@@ -57,12 +57,50 @@ class NavBar extends StatelessWidget {
                           elevation: 0,
                           child: SizedBox(
                             height: SizeConfig.screenHeight * 0.4,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                ChangeUserName(textEditingController: textEditingController),
-                                const ChangeCurrency(),
-                              ],
+                            child: RoundedBorderContainer(
+                              backgroundColor: Colors.white,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ChangeUserName(
+                                      textEditingController:
+                                          textEditingController),
+                                  const ChangeCurrency(),
+                                  TextButton(
+                                    onPressed: () {
+                                      if (textEditingController.text != '') {
+                                        context.read<UserData>().setName(
+                                            textEditingController.text);
+                                        context.read<UserData>().submitFrom();
+                                        context.read<UserData>().submitTo();
+
+                                        String fromCurrency =
+                                            Provider.of<UserData>(context,
+                                                    listen: false)
+                                                .from;
+                                        String toCurrency =
+                                            Provider.of<UserData>(context,
+                                                    listen: false)
+                                                .to;
+                                        context
+                                            .read<Currencies>()
+                                            .updateRatio(
+                                                fromCurrency, toCurrency);
+                                        context
+                                            .read<UserData>()
+                                            .logOrRefreshTheUser();
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    child: const RoundedBorderContainer(
+                                      backgroundColor: Color.fromARGB(255, 70, 106, 148),
+                                      child: StyledText(
+                                        text:"Submit",
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         );

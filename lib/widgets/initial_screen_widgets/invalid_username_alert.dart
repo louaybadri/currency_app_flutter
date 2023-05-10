@@ -10,15 +10,15 @@ class InvalidUsernameAlert extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
           Icon(Icons.warning),
-          Text("You didn't enter a Username, try again"),
+          Text("You didn't enter a username",textAlign: TextAlign.center,),
         ],
       ),
       actions: [
         TextButton(
-          child: const Text('Back to Page'),
+          child: const Text('Try again'),
           onPressed: () {
             Navigator.of(context).pop();
           },

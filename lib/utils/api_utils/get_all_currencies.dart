@@ -9,10 +9,7 @@ Future<List<String>> getAllCurrencies() async {
     http.Response res = await http.get(Uri.parse(url));
 
     List<String> data = jsonDecode(res.body)["currencies"].keys.toList();
-    print(data);
     return data;
-
-    // print(data.length);
   } catch (e) {
     debugPrint(e.toString());
     rethrow;

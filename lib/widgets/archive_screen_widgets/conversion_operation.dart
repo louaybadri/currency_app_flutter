@@ -26,6 +26,7 @@ class ConversionOperation extends StatelessWidget {
               context: context,
               builder: (_) {
                 return Dialog(
+                  backgroundColor: Colors.transparent,
                   elevation: 0,
                   child: ConversionDetails(archiveUnit: archiveUnit),
                 );

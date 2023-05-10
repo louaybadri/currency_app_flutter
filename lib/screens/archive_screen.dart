@@ -16,18 +16,20 @@ class ArchiveScreen extends StatelessWidget {
     return ScreenTemplate(
         child: Column(
       children: [
-        NavBar(isArchiveScreenActive: true),
+        const NavBar(isArchiveScreenActive: true),
         SizedBox(
           height: SizeConfig.screenHeight * 0.8,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ...context.watch<SavedData>().savedData
-                  .map((e) => ConversionOperation(
-                        archiveUnit: e,
-                      ))
-                  .toList(),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ...context.watch<SavedData>().savedData
+                    .map((e) => ConversionOperation(
+                          archiveUnit: e,
+                        ))
+                    .toList(),
+              ],
+            ),
           ),
         )
       ],

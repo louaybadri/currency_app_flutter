@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../config/size_config.dart';
 import '../../providers/currencies_provider.dart';
 import '../../providers/user_data_provider.dart';
+import '../../consts/constants.dart' as CONSTS;
 
 class CurrenciesAndSwitch extends StatelessWidget {
   const CurrenciesAndSwitch({
@@ -17,7 +18,7 @@ class CurrenciesAndSwitch extends StatelessWidget {
       children: [
         RoundedBorderContainer(
           widthRatio: 0.3,
-          backgroundColor: const Color.fromARGB(255, 70, 106, 148),
+          backgroundColor: CONSTS.blue,
 
           child: StyledText(text: context.watch<UserData>().from),
         ),

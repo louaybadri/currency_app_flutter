@@ -13,7 +13,6 @@ class DataSavedAlert extends StatelessWidget {
         mainAxisAlignment:
         MainAxisAlignment.spaceAround,
         children: const [
-          Icon(Icons.done),
           Text("Data Saved"),
         ],
       ),

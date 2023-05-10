@@ -8,6 +8,7 @@ import '../../providers/currencies_provider.dart';
 import '../../providers/saved_data_provider.dart';
 import '../../providers/user_data_provider.dart';
 import 'data_saved_alert.dart';
+import '../../consts/constants.dart' as CONSTS;
 
 class SaveDataButton extends StatelessWidget {
   const SaveDataButton({
@@ -31,7 +32,7 @@ class SaveDataButton extends StatelessWidget {
       },
       child: RoundedBorderContainer(
         widthRatio: 0.8,
-        backgroundColor: const Color.fromARGB(255, 55, 126, 63),
+        backgroundColor: CONSTS.green,
         child: Image.asset(
           "lib/assets/save.png",
           width: SizeConfig.screenWidth * 0.10,

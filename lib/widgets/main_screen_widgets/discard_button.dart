@@ -3,6 +3,7 @@ import 'package:currency_conversion/widgets/shared_widgets/rounded_border_contai
 import 'package:flutter/material.dart';
 
 import '../../config/size_config.dart';
+import '../../consts/constants.dart' as CONSTS;
 
 class DiscardButton extends StatelessWidget {
   const DiscardButton({
@@ -18,7 +19,7 @@ class DiscardButton extends StatelessWidget {
       },
       child: RoundedBorderContainer(
         widthRatio: 0.8,
-        backgroundColor: const Color.fromARGB(255, 235, 57, 44),
+        backgroundColor: CONSTS.red ,
         child: Image.asset(
           "lib/assets/delete.png",
           width: SizeConfig.screenWidth * 0.10,

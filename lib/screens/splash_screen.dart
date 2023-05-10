@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'package:currency_conversion/providers/user_data_provider.dart';
 import 'package:currency_conversion/screens/initial_screen.dart';
+import 'package:currency_conversion/screens/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -17,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ()=>Navigator.pushReplacement(context,
             MaterialPageRoute(builder:
                 (context) =>
-                InitialScreen()
+                context.watch<UserData>().loggedIn? const MainScreen(): const InitialScreen()
             )
         )
     );
