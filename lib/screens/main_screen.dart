@@ -39,7 +39,12 @@ class _MainScreenState extends State<MainScreen> {
       });
     }
   }
-
+  void discardLogic(){
+    setState(() {
+      textEditingController.text="";
+      value = 0;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return ScreenTemplate(
@@ -67,6 +72,7 @@ class _MainScreenState extends State<MainScreen> {
                 RoundedBorderContainer(
                   widthRatio: 0.8,
                   backgroundColor: const Color.fromARGB(255, 70, 106, 148),
+
                   child: StyledText(
                       text: invalidAmount
                           ? "Invalid Amount"
@@ -82,7 +88,7 @@ class _MainScreenState extends State<MainScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 SaveDataButton(textEditingController: textEditingController, value: value),
-                const DiscardButton()
+                DiscardButton(discardLogic: discardLogic,)
               ],
             ),
           )

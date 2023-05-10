@@ -7,8 +7,11 @@ Future<List<String>> getAllCurrencies() async {
     String url =
         "https://api.fastforex.io/currencies?api_key=63d0cbad05-cca154bf7e-rucdzf";
     http.Response res = await http.get(Uri.parse(url));
+
     List<String> data = jsonDecode(res.body)["currencies"].keys.toList();
+    print(data);
     return data;
+
     // print(data.length);
   } catch (e) {
     debugPrint(e.toString());

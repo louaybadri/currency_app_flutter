@@ -1,10 +1,10 @@
-import 'package:currency_conversion/config/size_config.dart';
-import 'package:currency_conversion/providers/currencies_provider.dart';
-import 'package:currency_conversion/providers/user_data_provider.dart';
-import 'package:currency_conversion/screens/main_screen.dart';
-import 'package:currency_conversion/screens/template/screen_template.dart';
-import 'package:currency_conversion/widgets/shared_widgets/rounded_border_container.dart';
-import 'package:currency_conversion/widgets/shared_widgets/styled_text.dart';
+import '../config/size_config.dart';
+import '../providers/currencies_provider.dart';
+import '../providers/user_data_provider.dart';
+import '../screens/main_screen.dart';
+import '../screens/template/screen_template.dart';
+import '../widgets/shared_widgets/rounded_border_container.dart';
+import '../widgets/shared_widgets/styled_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

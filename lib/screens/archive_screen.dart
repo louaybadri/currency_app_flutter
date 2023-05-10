@@ -16,7 +16,7 @@ class ArchiveScreen extends StatelessWidget {
     return ScreenTemplate(
         child: Column(
       children: [
-        const NavBar(isArchiveScreenActive: true),
+        NavBar(isArchiveScreenActive: true),
         SizedBox(
           height: SizeConfig.screenHeight * 0.8,
           child: Column(

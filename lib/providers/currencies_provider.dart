@@ -12,12 +12,12 @@ class Currencies with ChangeNotifier {
     initData();
   }
 
-  void initData() async {
+  Future<void> initData() async {
     _currencies = await getAllCurrencies();
     notifyListeners();
   }
 
-  void updateRatio(String from,String to)async{
+  Future<void> updateRatio(String from,String to)async{
     _ratio =  await convertFromTo(from, to);
     notifyListeners();
   }

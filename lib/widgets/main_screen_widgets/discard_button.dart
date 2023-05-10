@@ -6,14 +6,15 @@ import '../../config/size_config.dart';
 
 class DiscardButton extends StatelessWidget {
   const DiscardButton({
-    super.key,
+    super.key, required this.discardLogic,
   });
+  final Function discardLogic;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.pop(context);
+      onTap: (){
+        discardLogic();
       },
       child: RoundedBorderContainer(
         widthRatio: 0.8,

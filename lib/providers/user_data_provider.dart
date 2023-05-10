@@ -16,6 +16,7 @@ class UserData with ChangeNotifier{
     notifyListeners();
   }
 
+
   void setFrom(String from) {
     _from = from;
     notifyListeners();
@@ -25,6 +26,7 @@ class UserData with ChangeNotifier{
     _to = to;
     notifyListeners();
   }
+
 
 
   void switchCurrencies(){

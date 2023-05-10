@@ -18,6 +18,7 @@ class CurrenciesAndSwitch extends StatelessWidget {
         RoundedBorderContainer(
           widthRatio: 0.3,
           backgroundColor: const Color.fromARGB(255, 70, 106, 148),
+
           child: StyledText(text: context.watch<UserData>().from),
         ),
         InkWell(
@@ -36,6 +37,7 @@ class CurrenciesAndSwitch extends StatelessWidget {
         RoundedBorderContainer(
           widthRatio: 0.3,
           backgroundColor: const Color.fromARGB(255, 70, 106, 148),
+
           child: StyledText(text: context.watch<UserData>().to),
         ),
       ],
